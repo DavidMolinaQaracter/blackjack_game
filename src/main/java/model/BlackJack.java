@@ -3,9 +3,12 @@ package model;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
-public class BlackJack{
+public class BlackJack {
 
     private Deck deck;
     private Hand playerHand;
@@ -19,10 +22,11 @@ public class BlackJack{
         croupierHand = new Hand();
     }
 
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         initialDeal();
         playerTurn();
         croupierTurn();
+        TimeUnit.SECONDS.sleep(1);
         determineWinner();
     }
 
@@ -33,10 +37,10 @@ public class BlackJack{
         croupierHand.addCard(deck.removeCard());
 
         System.out.println("\nCroupier's hand:");
-        croupierHand.showHand(false);
+        System.out.print(croupierHand.showHand(false));
 
         System.out.println("\nYour hand:");
-        playerHand.showHand(true);
+        System.out.print(playerHand.showHand(true));
     }
 
     private void playerTurn() {
@@ -57,7 +61,7 @@ public class BlackJack{
             if (choice.equals("h")) {
                 playerHand.addCard(deck.removeCard());
                 System.out.println("\nYour hand:");
-                playerHand.showHand(true);
+                System.out.print(playerHand.showHand(true));
             } else if (choice.equals("s")) {
                 return;
             }
@@ -79,28 +83,32 @@ public class BlackJack{
         }
     }
 
-    private void croupierTurn() {
+    private void croupierTurn() throws InterruptedException {
         if (playerHand.hasLost()) { //If player has lost Croupier wins
             return;
         }
 
         System.out.println("\n--- Croupier's turn ---");
-        croupierHand.showHand(true);
+        System.out.print(croupierHand.showHand(true));
+
 
         croupierHand.calculateValue();
         while (croupierHand.getHandValue() < 17) {
-            System.out.println("Croupier hits...");
+            System.out.println("\nCroupier hits...");
+            TimeUnit.SECONDS.sleep(1);
             croupierHand.addCard(deck.removeCard());
-            croupierHand.showHand(true);
+            System.out.print(croupierHand.showHand(true));
             croupierHand.calculateValue();
+            TimeUnit.SECONDS.sleep(1);
         }
 
-        if (croupierHand.hasLost()) {
-            System.out.println("Croupier has lost!");
-        }else{
-            System.out.println("Croupier stands...");
-        }
+        if (!croupierHand.hasLost())
+            System.out.println("\nCroupier stands...");
+        else
+            System.out.println("\nCroupier bust!");
 
+        System.out.println("\nGAME ENDED!");
+        TimeUnit.SECONDS.sleep(1);
     }
 
     private void determineWinner() {
@@ -113,23 +121,23 @@ public class BlackJack{
 
         System.out.println("\n--- Final Hands ---");
         System.out.println("Croupier's hand:");
-        croupierHand.showHand(true);
+        System.out.print(croupierHand.showHand(true));
 
         System.out.println("\nPlayer's hand:");
-        playerHand.showHand(true);
+        System.out.print(playerHand.showHand(true));
 
         if (playerHand.hasLost()) {
-            System.out.println("\nYou lose.");
+            System.out.println("\nYou LOSE!");
         } else if (croupierHand.hasLost()) {
-            System.out.println("\nYou win!");
+            System.out.println("\nYou WIN!");
             playerWin = 1;
         } else if (playerValue > croupierValue) {
-            System.out.println("\nYou win!");
+            System.out.println("\nYou WIN!");
             playerWin = 1;
         } else if (playerValue < croupierValue) {
-            System.out.println("\nCroupier wins.");
+            System.out.println("\nYou LOSE!");
         } else {
-            System.out.println("\nIt's a tie.");
+            System.out.println("\nIt's a TIE!");
             playerWin = 2;
         }
 
@@ -138,22 +146,28 @@ public class BlackJack{
 
 
     private void writeGameHistory(int winner) {
-        String fileName = "model/game_history.txt";
+        String fileName = "src/main/java/game_history.txt";
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime currentDate = LocalDateTime.now();
+        String formattedDate = currentDate.format(format);
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Player's Hand Value: ")
-                .append(playerHand.getHandValue())
-                .append(" | Croupier's Hand Value: ")
-                .append(croupierHand.getHandValue())
+        sb.append(formattedDate).append(" | ");
+
+        sb.append("Player's Hand: ")
+                .append(playerHand.showHand(true))
+                .append(" | Croupier's Hand: ")
+                .append(croupierHand.showHand(true))
                 .append(" | RESULT: ");
 
-        if (winner == 0){
-            sb.append("Player lose");
+        if (winner == 0) {
+            sb.append("Player LOSE");
         } else if (winner == 1) {
-            sb.append("Player win");
-        }else if (winner == 2){
-            sb.append("Tie");
+            sb.append("Player WIN");
+        } else if (winner == 2) {
+            sb.append("TIE");
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {

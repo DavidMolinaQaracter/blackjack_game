@@ -50,23 +50,24 @@ public class Hand {
     }
 
 
-    public void showHand(boolean showFirstCard) {
+    public String showHand(boolean showFirstCard) {
+        StringBuilder hand = new StringBuilder();
         //Depending if your the croupier or not
         if (!showFirstCard) {
             for (int i = 0; i < cards.size(); i++) {
                 if(i == 0) {
-                    System.out.print("[X] "); //If isCroupier doesn't show the first card
+                    hand.append("[X] "); //If isCroupier doesn't show the first card
                 }else{
-                    System.out.print(cards.get(i) + " ");
+                    hand.append(cards.get(i)).append(" ");
                 }
             }
         }else{
             for(Card card : cards){
-                System.out.print(card + " ");
+                hand.append(card).append(" ");
             }
         }
 
-        System.out.println();
+        return hand.toString();
     }
 
     public void clear() {

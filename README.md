@@ -6,7 +6,7 @@
 * **`Deck.java`**: Manages the 52 cards and shuffling logic.
 * **`Hand.java`**: Manages a collection of cards, calculates scores, and renders the ASCII art.
 * **`Card.java`**: Represents a single card with Rank and Suit.
-* **`Rank.java` & `Suit.java`**: Enums defining card properties.
+* **`Rank.java` and `Suit.java`**: Enums defining card properties.
 
 ## How to Run
 
@@ -16,7 +16,7 @@ Clone this repository:
   git clone https://github.com/DavidMolinaQaracter/blackjack_game.git
 ```
 
-Open the maven projet con intelliJ and run the Main.java class.
+Open the maven project con intelliJ and run the Main.java class.
 
 ## Execution Example
 

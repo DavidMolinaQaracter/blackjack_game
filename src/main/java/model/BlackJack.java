@@ -32,7 +32,7 @@ public class BlackJack{
         playerHand.addCard(deck.removeCard());
         croupierHand.addCard(deck.removeCard());
 
-        System.out.println("Cropier's hand:");
+        System.out.println("\nCroupier's hand:");
         croupierHand.showHand(false);
 
         System.out.println("\nYour hand:");
@@ -138,7 +138,7 @@ public class BlackJack{
 
 
     private void writeGameHistory(int winner) {
-        String fileName = "game_history.txt";
+        String fileName = "model/game_history.txt";
 
         StringBuilder sb = new StringBuilder();
 

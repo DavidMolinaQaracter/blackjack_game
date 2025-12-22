@@ -55,16 +55,18 @@ public class Hand {
         if (!showFirstCard) {
             for (int i = 0; i < cards.size(); i++) {
                 if(i == 0) {
-                    System.out.println("Hidden card"); //If isCroupier doesnt show the first card
+                    System.out.print("[X] "); //If isCroupier doesn't show the first card
                 }else{
-                    System.out.println(cards.get(i));
+                    System.out.print(cards.get(i) + " ");
                 }
             }
         }else{
             for(Card card : cards){
-                System.out.println(card);
+                System.out.print(card + " ");
             }
         }
+
+        System.out.println();
     }
 
     public void clear() {

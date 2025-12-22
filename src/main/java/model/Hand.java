@@ -56,7 +56,7 @@ public class Hand {
     }
 
 
-    public void showHand(boolean hideFirstCard) {
+    public void showHand() {
         //Depending if your the croupier or not
         if (isCroupier) {
             for (int i = 0; i < cards.size(); i++) {

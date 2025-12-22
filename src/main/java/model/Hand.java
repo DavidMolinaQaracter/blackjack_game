@@ -7,15 +7,9 @@ public class Hand {
 
     private final List<Card> cards;
     private int handValue;
-    private boolean isCroupier;
 
-    public Hand(boolean isCroupier) {
+    public Hand() {
         cards = new ArrayList<>();
-        this.isCroupier = isCroupier;
-    }
-
-    public boolean isCroupier() {
-        return isCroupier;
     }
 
     public void addCard(Card card) {
@@ -56,14 +50,15 @@ public class Hand {
     }
 
 
-    public void showHand() {
+    public void showHand(boolean showFirstCard) {
         //Depending if your the croupier or not
-        if (isCroupier) {
+        if (!showFirstCard) {
             for (int i = 0; i < cards.size(); i++) {
                 if(i == 0) {
                     System.out.println("Hidden card"); //If isCroupier doesnt show the first card
+                }else{
+                    System.out.println(cards.get(i));
                 }
-                System.out.println(cards.get(i));
             }
         }else{
             for(Card card : cards){

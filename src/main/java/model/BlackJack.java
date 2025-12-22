@@ -12,8 +12,8 @@ public class BlackJack{
     public BlackJack() {
         sc = new Scanner(System.in);
         deck = new Deck();
-        playerHand = new Hand(false);
-        croupierHand = new Hand(true);
+        playerHand = new Hand();
+        croupierHand = new Hand();
     }
 
     public void startGame() {
@@ -30,10 +30,10 @@ public class BlackJack{
         croupierHand.addCard(deck.removeCard());
 
         System.out.println("Cropier's hand:");
-        croupierHand.showHand();
+        croupierHand.showHand(false);
 
         System.out.println("\nYour hand:");
-        playerHand.showHand();
+        playerHand.showHand(true);
     }
 
     private void playerTurn() {
@@ -52,7 +52,7 @@ public class BlackJack{
             if (choice.equals("h")) {
                 playerHand.addCard(deck.removeCard());
                 System.out.println("\nYour hand:");
-                playerHand.showHand();
+                playerHand.showHand(true);
             } else if (choice.equals("s")) {
                 return;
             } else {
@@ -82,12 +82,12 @@ public class BlackJack{
         }
 
         System.out.println("\n--- Croupier's turn ---");
-        croupierHand.showHand();
+        croupierHand.showHand(false);
 
         while (croupierHand.getHandValue() < 17) {
             System.out.println("Croupier hits...");
             croupierHand.addCard(deck.removeCard());
-            croupierHand.showHand();
+            croupierHand.showHand(false);
         }
 
         if (croupierHand.hasLost()) {
@@ -101,10 +101,10 @@ public class BlackJack{
 
         System.out.println("\n--- Final Hands ---");
         System.out.println("Croupier's hand:");
-        croupierHand.showHand();
+        croupierHand.showHand(true);
 
         System.out.println("\nPlayer's hand:");
-        playerHand.showHand();
+        playerHand.showHand(true);
 
         if (playerHand.hasLost()) {
             System.out.println("\nYou lose.");

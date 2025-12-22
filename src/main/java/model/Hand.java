@@ -39,7 +39,7 @@ public class Hand {
             aceCount--;
         }
 
-        ;
+        this.handValue = value;
     }
 
 

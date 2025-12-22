@@ -7,16 +7,21 @@ public class Hand {
 
     private final List<Card> cards;
     private int handValue;
+    private boolean isCroupier;
 
-    public Hand() {
+    public Hand(boolean isCroupier) {
         cards = new ArrayList<>();
+        this.isCroupier = isCroupier;
     }
 
+    public boolean isCroupier() {
+        return isCroupier;
+    }
 
     public void addCard(Card card) {
         cards.add(card);
     }
-    
+
     public void calculateValue() {
         int value = 0;
         int aceCount = 0;
@@ -52,19 +57,20 @@ public class Hand {
 
 
     public void showHand(boolean hideFirstCard) {
-        for (int i = 0; i < cards.size(); i++) {
-            if (i == 0 && hideFirstCard) {
-                System.out.println("[Hidden card]");
-            } else {
+        //Depending if your the croupier or not
+        if (isCroupier) {
+            for (int i = 0; i < cards.size(); i++) {
+                if(i == 0) {
+                    System.out.println("Hidden card"); //If isCroupier doesnt show the first card
+                }
                 System.out.println(cards.get(i));
             }
-        }
-
-        if (!hideFirstCard) {
-            System.out.println("Total value: " + calculateValue());
+        }else{
+            for(Card card : cards){
+                System.out.println(card);
+            }
         }
     }
-
 
     public void clear() {
         cards.clear();

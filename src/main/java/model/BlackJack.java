@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 public class BlackJack {
 
-    private Deck deck;
-    private Hand playerHand;
-    private Hand croupierHand;
-    private Scanner sc;
+    private final Deck deck;
+    private final Hand playerHand;
+    private final Hand croupierHand;
+    private final Scanner  sc;
 
     public BlackJack() {
         sc = new Scanner(System.in);
@@ -37,13 +37,13 @@ public class BlackJack {
         croupierHand.addCard(deck.removeCard());
 
         System.out.println("\nCroupier's hand:");
-        System.out.print(croupierHand.showHand(false));
+        croupierHand.showPrettyHand(false);
 
         System.out.println("\nYour hand:");
-        System.out.print(playerHand.showHand(true));
+        playerHand.showPrettyHand(true);
     }
 
-    private void playerTurn() {
+    private void playerTurn() throws InterruptedException {
         while (true) {
             playerHand.calculateValue();
 
@@ -53,6 +53,11 @@ public class BlackJack {
             }
 
             if (playerHand.hasLost()) {
+                System.out.println("\nYou went over 21!");
+                TimeUnit.SECONDS.sleep(1);
+                System.out.println("\nGAME OVER!");
+                TimeUnit.SECONDS.sleep(1);
+
                 return;
             }
 
@@ -61,7 +66,7 @@ public class BlackJack {
             if (choice.equals("h")) {
                 playerHand.addCard(deck.removeCard());
                 System.out.println("\nYour hand:");
-                System.out.print(playerHand.showHand(true));
+                playerHand.showPrettyHand(true);
             } else if (choice.equals("s")) {
                 return;
             }
@@ -89,7 +94,7 @@ public class BlackJack {
         }
 
         System.out.println("\n--- Croupier's turn ---");
-        System.out.print(croupierHand.showHand(true));
+        croupierHand.showPrettyHand(true);
 
 
         croupierHand.calculateValue();
@@ -97,7 +102,7 @@ public class BlackJack {
             System.out.println("\nCroupier hits...");
             TimeUnit.SECONDS.sleep(1);
             croupierHand.addCard(deck.removeCard());
-            System.out.print(croupierHand.showHand(true));
+            croupierHand.showPrettyHand(true);
             croupierHand.calculateValue();
             TimeUnit.SECONDS.sleep(1);
         }
@@ -105,9 +110,9 @@ public class BlackJack {
         if (!croupierHand.hasLost())
             System.out.println("\nCroupier stands...");
         else
-            System.out.println("\nCroupier bust!");
+            System.out.println("\nThe croupier went over 21!");
 
-        System.out.println("\nGAME ENDED!");
+        System.out.println("\nGAME OVER!");
         TimeUnit.SECONDS.sleep(1);
     }
 
@@ -121,10 +126,10 @@ public class BlackJack {
 
         System.out.println("\n--- Final Hands ---");
         System.out.println("Croupier's hand:");
-        System.out.print(croupierHand.showHand(true));
+        croupierHand.showPrettyHand(true);
 
         System.out.println("\nPlayer's hand:");
-        System.out.print(playerHand.showHand(true));
+        playerHand.showPrettyHand(true);
 
         if (playerHand.hasLost()) {
             System.out.println("\nYou LOSE!");
@@ -157,9 +162,9 @@ public class BlackJack {
         sb.append(formattedDate).append(" | ");
 
         sb.append("Player's Hand: ")
-                .append(playerHand.showHand(true))
+                .append(playerHand.showSimpleHand(true))
                 .append(" | Croupier's Hand: ")
-                .append(croupierHand.showHand(true))
+                .append(croupierHand.showSimpleHand(true))
                 .append(" | RESULT: ");
 
         if (winner == 0) {

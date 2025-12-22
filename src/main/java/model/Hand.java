@@ -50,7 +50,37 @@ public class Hand {
     }
 
 
-    public String showHand(boolean showFirstCard) {
+    public void showPrettyHand(boolean showFirstCard) {
+        StringBuilder[] cardsString = new StringBuilder[5]; //Height of a card print
+        for (int i = 0; i < 5; i++) {
+            cardsString[i] = new StringBuilder();
+        }
+
+        //Depending if your the croupier or not
+        if (!showFirstCard) {
+            for (int i = 0; i < cards.size(); i++) {
+                if(i == 0) {
+                    cardsString[0].append("┌───────┐ ");
+                    cardsString[1].append("│░░░░░░░│ ");
+                    cardsString[2].append("│░░░░░░░│ ");
+                    cardsString[3].append("│░░░░░░░│ ");
+                    cardsString[4].append("└───────┘ ");
+                }else{
+                    addCardString(cardsString, cards.get(i));
+                }
+            }
+        }else{
+            for(Card card : cards){
+                addCardString(cardsString, card);
+            }
+        }
+
+        for(StringBuilder card : cardsString){
+            System.out.println(card);
+        }
+    }
+
+    public String showSimpleHand(boolean showFirstCard) {
         StringBuilder hand = new StringBuilder();
         //Depending if your the croupier or not
         if (!showFirstCard) {
@@ -69,6 +99,18 @@ public class Hand {
 
         return hand.toString();
     }
+
+    public void addCardString(StringBuilder[] cardsString, Card card) {
+        String rank = card.getRankString();
+        String suit = card.getSuitString();
+
+        cardsString[0].append("┌───────┐ ");
+        cardsString[1].append(String.format("│%-2s     │ ", rank));
+        cardsString[2].append(String.format("│   %s   │ ", suit));
+        cardsString[3].append(String.format("│     %2s│ ", rank));
+        cardsString[4].append("└───────┘ ");
+    }
+
 
     public void clear() {
         cards.clear();

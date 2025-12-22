@@ -123,7 +123,6 @@ public class Main {
         System.out.println("   - J, Q, K: 10 points.");
         System.out.println("   - Ace: 1 or 11 points.");
         System.out.println("3. THE DEAL: You get two cards. The Croupier gets two cards, but one is hidden.");
-        System.out.println("    - [X] represents the Croupier's hidden card.");
         System.out.println("4. YOUR TURN: Choose 'h' to Hit (take a card) or 's' to Stand (keep your hand).");
         System.out.println("5. CROUPIER'S TURN: The Croupier must hit until their hand is 17 or higher.");
         System.out.println("6. WINNING: You win if your total is higher than the Croupier's (without busting) or if the Croupier busts.");

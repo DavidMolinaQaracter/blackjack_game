@@ -24,47 +24,61 @@ public class Card {
         return rank.getValue();
     }
 
+
     @Override
     public String toString() {
         StringBuilder card = new StringBuilder();
         card.append("[");
-        switch (rank) {
-            case ACE:
-                card.append("A");
-                break;
-            case JACK:
-                card.append("J");
-                break;
-            case QUEEN:
-                card.append("Q");
-                break;
-            case KING:
-                card.append("K");
-                break;
-            default:
-                card.append(rank.getValue());
-                break;
-
-        }
-
-
-        switch (suit) {
-            case CLUBS:
-                card.append("♣");
-                break;
-            case DIAMONDS:
-                card.append("♦");
-                break;
-            case HEARTS:
-                card.append("♥");
-                break;
-            case SPADES:
-                card.append("♠");
-                break;
-        }
-
+        card.append(getRankString());
+        card.append(getSuitString());
         card.append("]");
 
         return card.toString();
+    }
+
+
+    public String getSuitString() {
+        String suitString = "";
+        switch (this.suit) {
+            case CLUBS:
+                suitString = "♣";
+                break;
+            case DIAMONDS:
+                suitString = "♦";
+                break;
+            case HEARTS:
+                suitString = "♥";
+                break;
+            case SPADES:
+                suitString = "♠";
+                break;
+        }
+
+        //\uFE0E forces the symbol ♣, ♦, ♥, ♠ to be 1 character in size
+        return suitString + "\uFE0E";
+
+    }
+
+    public String getRankString() {
+        String rankString = "";
+        switch (this.rank) {
+            case ACE:
+                rankString = "A";
+                break;
+            case JACK:
+                rankString = "J";
+                break;
+            case QUEEN:
+                rankString = "Q";
+                break;
+            case KING:
+                rankString = "K";
+                break;
+            default:
+                rankString = String.valueOf(rank.getValue());
+                break;
+        }
+
+        return rankString;
     }
 }

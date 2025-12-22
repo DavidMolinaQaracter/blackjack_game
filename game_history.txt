@@ -1,0 +1,11 @@
+Player's Hand Value: 16 | Croupier's Hand Value: 22 | RESULT: Player lost
+Player's Hand Value: 16 | Croupier's Hand Value: 19 | RESULT: Player won
+Player's Hand Value: 12 | Croupier's Hand Value: 20 | RESULT: Player won
+Player's Hand Value: 14 | Croupier's Hand Value: 17 | RESULT: Player win
+Player's Hand Value: 11 | Croupier's Hand Value: 18 | RESULT: Player win
+Player's Hand Value: 20 | Croupier's Hand Value: 19 | RESULT: Player lose
+Player's Hand Value: 12 | Croupier's Hand Value: 22 | RESULT: Player lose
+Player's Hand Value: 14 | Croupier's Hand Value: 17 | RESULT: Player lose
+Player's Hand Value: 12 | Croupier's Hand Value: 18 | RESULT: Player lose
+Player's Hand Value: 13 | Croupier's Hand Value: 21 | RESULT: Player lose
+Player's Hand Value: 17 | Croupier's Hand Value: 18 | RESULT: Player lose

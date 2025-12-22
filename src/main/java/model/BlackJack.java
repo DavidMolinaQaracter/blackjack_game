@@ -1,5 +1,8 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class BlackJack{
@@ -38,6 +41,8 @@ public class BlackJack{
 
     private void playerTurn() {
         while (true) {
+            playerHand.calculateValue();
+
             if (playerHand.isBlackjack()) {
                 System.out.println("\nBlackjack!");
                 return;
@@ -47,7 +52,7 @@ public class BlackJack{
                 return;
             }
 
-            String choice = askHitOrStand();
+            String choice = askHitOrStand(); //Always gonna be 'h' or 's'
 
             if (choice.equals("h")) {
                 playerHand.addCard(deck.removeCard());
@@ -55,8 +60,6 @@ public class BlackJack{
                 playerHand.showHand(true);
             } else if (choice.equals("s")) {
                 return;
-            } else {
-                System.out.println("Invalid option.");
             }
         }
     }
@@ -82,22 +85,31 @@ public class BlackJack{
         }
 
         System.out.println("\n--- Croupier's turn ---");
-        croupierHand.showHand(false);
+        croupierHand.showHand(true);
 
+        croupierHand.calculateValue();
         while (croupierHand.getHandValue() < 17) {
             System.out.println("Croupier hits...");
             croupierHand.addCard(deck.removeCard());
-            croupierHand.showHand(false);
+            croupierHand.showHand(true);
+            croupierHand.calculateValue();
         }
 
         if (croupierHand.hasLost()) {
             System.out.println("Croupier has lost!");
+        }else{
+            System.out.println("Croupier stands...");
         }
+
     }
 
     private void determineWinner() {
+
+        int playerWin = 0; //0 if player lose, 1 if player win, 2 if tie
+        playerHand.calculateValue();
         int playerValue = playerHand.getHandValue();
-        int dealerValue = croupierHand.getHandValue();
+        croupierHand.calculateValue();
+        int croupierValue = croupierHand.getHandValue();
 
         System.out.println("\n--- Final Hands ---");
         System.out.println("Croupier's hand:");
@@ -110,12 +122,45 @@ public class BlackJack{
             System.out.println("\nYou lose.");
         } else if (croupierHand.hasLost()) {
             System.out.println("\nYou win!");
-        } else if (playerValue > dealerValue) {
+            playerWin = 1;
+        } else if (playerValue > croupierValue) {
             System.out.println("\nYou win!");
-        } else if (playerValue < dealerValue) {
-            System.out.println("\nDealer wins.");
+            playerWin = 1;
+        } else if (playerValue < croupierValue) {
+            System.out.println("\nCroupier wins.");
         } else {
             System.out.println("\nIt's a tie.");
+            playerWin = 2;
+        }
+
+        writeGameHistory(playerWin);
+    }
+
+
+    private void writeGameHistory(int winner) {
+        String fileName = "game_history.txt";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Player's Hand Value: ")
+                .append(playerHand.getHandValue())
+                .append(" | Croupier's Hand Value: ")
+                .append(croupierHand.getHandValue())
+                .append(" | RESULT: ");
+
+        if (winner == 0){
+            sb.append("Player lose");
+        } else if (winner == 1) {
+            sb.append("Player win");
+        }else if (winner == 2){
+            sb.append("Tie");
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+            writer.write(sb.toString());
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error writing game history.");
         }
     }
 }

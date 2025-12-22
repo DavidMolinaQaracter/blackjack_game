@@ -1,3 +1,0 @@
-22/12/2025 17:26:03 | Player's Hand: [9♣] [7♦]  | Croupier's Hand: [2♦] [Q♦] [5♠]  | RESULT: Player lose
-22/12/2025 17:27:59 | Player's Hand: [10♠] [6♦]  | Croupier's Hand: [K♦] [Q♦]  | RESULT: Player lose
-22/12/2025 17:28:32 | Player's Hand: [4♣] [J♠] [3♦]  | Croupier's Hand: [A♣] [7♥]  | RESULT: Player lose

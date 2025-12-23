@@ -11,12 +11,9 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<>();
         createDeck();
-        shuffle();
+        Collections.shuffle(cards);
     }
 
-    /**
-     * Creates a standard deck of 52 cards
-     */
     private void createDeck() {
         cards.clear();
 
@@ -27,16 +24,6 @@ public class Deck {
         }
     }
 
-    /**
-     * Shuffles the deck.
-     */
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
-
-    /**
-     * Deals (removes and returns) the top card of the deck.
-     */
     public Card removeCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("The deck is empty");
@@ -44,9 +31,6 @@ public class Deck {
         return cards.remove(0);
     }
 
-    /**
-     * Returns the number of remaining cards.
-     */
     public int getDeckSize() {
         return cards.size();
     }
